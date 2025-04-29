@@ -1106,7 +1106,7 @@ dependencies = [
 [[package]]
 name = "bls12_381"
 version = "0.8.0"
-source = "git+https://github.com/zkMIPS-patches/bls12_381?branch=patch-0.8.0#7452c9fc2403cdee80b117ecb8931b7cf608d6ce"
+source = "git+https://github.com/zkMIPS-patches/bls12_381?branch=patch-0.8.0-tmp#7452c9fc2403cdee80b117ecb8931b7cf608d6ce"
 dependencies = [
  "cfg-if",
  "ff",
@@ -2632,7 +2632,7 @@ dependencies = [
 [[package]]
 name = "kzg-rs"
 version = "0.2.6"
-source = "git+https://github.com/zkMIPS-patches/kzg-rs?branch=zkMIPS#05eb129bbc2a1b8c78a9d335e92dfeabb6484700"
+source = "git+https://github.com/zkMIPS-patches/kzg-rs?branch=zkMIPS-tmp#41f77821428b75e43bd873bc817efc27b6b172ad"
 dependencies = [
  "bls12_381",
  "ff",
