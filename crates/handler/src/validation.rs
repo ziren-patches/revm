@@ -206,9 +206,6 @@ pub fn validate_tx_env<CTX: ContextTr, Error>(
             }
         }
         TransactionType::Goat => {
-            if Some(context.cfg().chain_id()) != tx.chain_id() {
-                return Err(InvalidTransaction::InvalidChainId);
-            }
         }
         TransactionType::Custom => {
             // Custom transaction type check is not done here.
