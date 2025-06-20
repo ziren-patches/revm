@@ -12,7 +12,6 @@ use context_interface::{
     Cfg, Database, JournalTr, Transaction,
 };
 use interpreter::{FrameInput, Gas, InitialAndFloorGas};
-use primitives::goat::GOAT_CHAIN_ID;
 use std::{vec, vec::Vec};
 
 pub trait EvmTrError<EVM: EvmTr>:
@@ -207,7 +206,7 @@ pub trait Handler {
             // Return unused gas to caller
             self.reimburse_caller(evm, &mut exec_result)?;
             // Pay transaction fees to beneficiary
-            if evm.ctx().cfg().chain_id() != GOAT_CHAIN_ID {
+            if !evm.ctx().cfg().is_goat_chain() {
                 self.reward_beneficiary(evm, &mut exec_result)?;
             }
         }
