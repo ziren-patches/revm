@@ -57,9 +57,9 @@ checksum = "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923"
 
 [[package]]
 name = "alloy-chains"
-version = "0.2.4"
+version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "19a9cc9d81ace3da457883b0bdf76776e55f1b84219a9e9d55c27ad308548d3f"
+checksum = "5674914c2cfdb866c21cb0c09d82374ee39a1395cf512e7515f4c014083b3fff"
 dependencies = [
  "alloy-primitives",
  "num_enum",
@@ -69,7 +69,7 @@ dependencies = [
 [[package]]
 name = "alloy-consensus"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-eips",
  "alloy-primitives",
@@ -92,7 +92,7 @@ dependencies = [
 [[package]]
 name = "alloy-consensus-any"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-consensus",
  "alloy-eips",
@@ -142,7 +142,7 @@ dependencies = [
 [[package]]
 name = "alloy-eips"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-eip2124",
  "alloy-eip2930",
@@ -173,7 +173,7 @@ dependencies = [
 [[package]]
 name = "alloy-json-rpc"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",
@@ -186,7 +186,7 @@ dependencies = [
 [[package]]
 name = "alloy-network"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-consensus",
  "alloy-consensus-any",
@@ -211,7 +211,7 @@ dependencies = [
 [[package]]
 name = "alloy-network-primitives"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-consensus",
  "alloy-eips",
@@ -236,7 +236,7 @@ dependencies = [
  "foldhash",
  "getrandom 0.3.3",
  "hashbrown 0.15.4",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "itoa",
  "k256",
  "keccak-asm",
@@ -254,7 +254,7 @@ dependencies = [
 [[package]]
 name = "alloy-provider"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-chains",
  "alloy-consensus",
@@ -314,7 +314,7 @@ dependencies = [
 [[package]]
 name = "alloy-rpc-client"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-json-rpc",
  "alloy-primitives",
@@ -338,7 +338,7 @@ dependencies = [
 [[package]]
 name = "alloy-rpc-types-any"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-consensus-any",
  "alloy-rpc-types-eth",
@@ -348,7 +348,7 @@ dependencies = [
 [[package]]
 name = "alloy-rpc-types-eth"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-consensus",
  "alloy-consensus-any",
@@ -367,7 +367,7 @@ dependencies = [
 [[package]]
 name = "alloy-serde"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-primitives",
  "serde",
@@ -377,7 +377,7 @@ dependencies = [
 [[package]]
 name = "alloy-signer"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-primitives",
  "async-trait",
@@ -391,7 +391,7 @@ dependencies = [
 [[package]]
 name = "alloy-signer-local"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-consensus",
  "alloy-network",
@@ -426,7 +426,7 @@ dependencies = [
  "alloy-sol-macro-input",
  "const-hex",
  "heck",
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "proc-macro-error2",
  "proc-macro2",
  "quote",
@@ -476,7 +476,7 @@ dependencies = [
 [[package]]
 name = "alloy-transport"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-json-rpc",
  "base64",
@@ -497,7 +497,7 @@ dependencies = [
 [[package]]
 name = "alloy-transport-http"
 version = "0.14.0"
-source = "git+https://github.com/zkMIPS-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
 dependencies = [
  "alloy-json-rpc",
  "alloy-transport",
@@ -1088,7 +1088,7 @@ dependencies = [
 [[package]]
 name = "bls12_381"
 version = "0.8.0"
-source = "git+https://github.com/zkMIPS-patches/bls12_381?branch=patch-0.8.0#7027ea471e5b5a01053ceee2d0e076241a241c2e"
+source = "git+https://github.com/ziren-patches/bls12_381?branch=patch-0.8.0#6c60e227e78dd331a6052774e7c50d157d5f3965"
 dependencies = [
  "cfg-if",
  "ff",
@@ -1161,9 +1161,9 @@ checksum = "37b2a672a2cb129a2e41c10b1224bb368f9f37a2b16b612598138befd7b37eb5"
 
 [[package]]
 name = "cc"
-version = "1.2.27"
+version = "1.2.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d487aa071b5f64da6f19a3e848e3578944b726ee5a4854b82172f02aa876bfdc"
+checksum = "5c1599538de2394445747c8cf7935946e3cc27e9625f889d979bfb2aaf569362"
 dependencies = [
  "shlex",
 ]
@@ -1450,9 +1450,9 @@ checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
 name = "crunchy"
-version = "0.2.3"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "43da5946c66ffcc7745f48db692ffbb10a83bfe0afd96235c5c2a4fb23994929"
+checksum = "460fbee9c2c2f33933d720630a6a0bac33ba7053db5344fac858d4b8952d77d5"
 
 [[package]]
 name = "crypto-bigint"
@@ -2460,9 +2460,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cea70ddb795996207ad57735b50c5982d8844f38ba9ee5f1aedcfb708a2aa11e"
+checksum = "fe4cd85333e22411419a0bcae1297d25e58c9443848b11dc6a86fefe8c78a661"
 dependencies = [
  "arbitrary",
  "equivalent",
@@ -2481,6 +2481,17 @@ dependencies = [
  "portable-atomic",
  "unicode-width",
  "web-time",
+]
+
+[[package]]
+name = "io-uring"
+version = "0.7.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b86e202f00093dcba4275d4636b93ef9dd75d025ae560d2521b45ea28ab49013"
+dependencies = [
+ "bitflags",
+ "cfg-if",
+ "libc",
 ]
 
 [[package]]
@@ -2595,7 +2606,7 @@ dependencies = [
 [[package]]
 name = "kzg-rs"
 version = "0.2.6"
-source = "git+https://github.com/zkMIPS-patches/kzg-rs?branch=zkMIPS#05eb129bbc2a1b8c78a9d335e92dfeabb6484700"
+source = "git+https://github.com/ziren-patches/kzg-rs?branch=ziren#4cd5e3086a49dc1e94ffbd63ee4a7a9b2e342faa"
 dependencies = [
  "bls12_381",
  "ff",
@@ -3675,9 +3686,9 @@ checksum = "ba39f3699c378cd8970968dcbff9c43159ea4cfbd88d43c00b22f2ef10a435d2"
 
 [[package]]
 name = "reqwest"
-version = "0.12.20"
+version = "0.12.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eabf4c97d9130e2bf606614eb937e86edac8292eaa6f422f995d7e8de1eb1813"
+checksum = "cbc931937e6ca3a06e3b6c0aa7841849b160a90351d6ab467a8b9b9959767531"
 dependencies = [
  "base64",
  "bytes",
@@ -4145,6 +4156,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "schemars"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "82d20c4491bc164fa2f6c5d44565947a52ad80b9505d8e36f8d54c27c739fcd0"
+dependencies = [
+ "dyn-clone",
+ "ref-cast",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "scopeguard"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4267,7 +4290,7 @@ version = "1.0.140"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20068b6e96dc6c9bd23e01df8827e6c7e1f2fddd43c21810382803c136b99373"
 dependencies = [
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "itoa",
  "memchr",
  "ryu",
@@ -4288,16 +4311,17 @@ dependencies = [
 
 [[package]]
 name = "serde_with"
-version = "3.13.0"
+version = "3.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf65a400f8f66fb7b0552869ad70157166676db75ed8181f8104ea91cf9d0b42"
+checksum = "f2c45cd61fefa9db6f254525d46e392b852e0e61d9a1fd36e5bd183450a556d5"
 dependencies = [
  "base64",
  "chrono",
  "hex",
  "indexmap 1.9.3",
- "indexmap 2.9.0",
- "schemars",
+ "indexmap 2.10.0",
+ "schemars 0.9.0",
+ "schemars 1.0.4",
  "serde",
  "serde_derive",
  "serde_json",
@@ -4307,9 +4331,9 @@ dependencies = [
 
 [[package]]
 name = "serde_with_macros"
-version = "3.13.0"
+version = "3.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81679d9ed988d5e9a5e6531dc3f2c28efbd639cbd1dfb628df08edea6004da77"
+checksum = "de90945e6565ce0d9a25098082ed4ee4002e047cb59892c318d66821e14bb30f"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -4663,15 +4687,17 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "1.45.1"
+version = "1.46.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75ef51a33ef1da925cea3e4eb122833cb377c61439ca401b770f54902b806779"
+checksum = "0cc3a2344dafbe23a245241fe8b09735b521110d30fcefbbd5feb1797ca35d17"
 dependencies = [
  "backtrace",
  "bytes",
+ "io-uring",
  "libc",
  "mio",
  "pin-project-lite",
+ "slab",
  "socket2",
  "tokio-macros",
  "windows-sys 0.52.0",
@@ -4735,7 +4761,7 @@ version = "0.22.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "41fe8c660ae4257887cf66394862d21dbca4a6ddd26f04a3560410406a2f819a"
 dependencies = [
- "indexmap 2.9.0",
+ "indexmap 2.10.0",
  "toml_datetime",
  "winnow",
 ]
@@ -5489,7 +5515,7 @@ dependencies = [
 [[package]]
 name = "zkm-lib"
 version = "1.1.0"
-source = "git+https://github.com/zkMIPS/zkMIPS.git#337322f6152e1c6020f13b248b1a9f543b2c5312"
+source = "git+https://github.com/ProjectZKM/Ziren.git#a216e0b22c4a1543a545266583e380ec40b4259b"
 dependencies = [
  "bincode",
  "cfg-if",
@@ -5501,7 +5527,7 @@ dependencies = [
 [[package]]
 name = "zkm-primitives"
 version = "1.1.0"
-source = "git+https://github.com/zkMIPS/zkMIPS.git#337322f6152e1c6020f13b248b1a9f543b2c5312"
+source = "git+https://github.com/ProjectZKM/Ziren.git#a216e0b22c4a1543a545266583e380ec40b4259b"
 dependencies = [
  "bincode",
  "hex",
