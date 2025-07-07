@@ -56,17 +56,25 @@ handler = { path = "crates/handler", package = "revm-handler", version = "3.0.0"
 # alloy 
 alloy-eip2930 = { version = "0.2.0", default-features = false }
 alloy-eip7702 = { version = "0.6.0", default-features = false }
-alloy-primitives = { version = "1.0", default-features = false }
+alloy-primitives = { version = "1.0.0", default-features = false }
 
 # alloy in examples, revme or feature flagged.
 alloy-rlp = { version = "0.3", default-features = false }
 alloy-sol-types = { version = "1.0.0", default-features = false }
-alloy-consensus = { version = "0.14.0", default-features = false }
-alloy-eips = { version = "0.14.0", default-features = false }
-alloy-provider = { version = "0.14.0", default-features = false }
-alloy-signer = { version = "0.14.0", default-features = false }
-alloy-signer-local = { version = "0.14.0", default-features = false }
-alloy-transport = { version = "0.14.0", default-features = false }
+
+alloy-consensus = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
+alloy-eips = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
+alloy-provider = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
+alloy-signer = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
+alloy-signer-local = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
+alloy-transport = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
+
+# alloy-consensus = { path = "../alloy/crates/consensus", default-features = false }
+# alloy-eips = { path = "../alloy/crates/eips", default-features = false }
+# alloy-provider = { path = "../alloy/crates/provider", default-features = false }
+# alloy-signer = { path = "../alloy/crates/signer", default-features = false }
+# alloy-signer-local = { path = "../alloy/crates/signer-local", default-features = false }
+# alloy-transport = { path = "../alloy/crates/transport", default-features = false }
 
 # precompiles
 ark-bls12-381 = { version = "0.5", default-features = false }
@@ -80,7 +88,7 @@ bn = { package = "substrate-bn", version = "0.6", default-features = false }
 c-kzg = { version = "2.1.0", default-features = false }
 k256 = { version = "0.13.3", default-features = false }
 libsecp256k1 = { version = "0.7", default-features = false }
-kzg-rs = { git = "https://github.com/zkMIPS-patches/kzg-rs", branch = "zkMIPS", default-features = false }
+kzg-rs = { git = "https://github.com/ziren-patches/kzg-rs", branch = "ziren", default-features = false }
 secp256k1 = { version = "0.30", default-features = false }
 sha2 = { version = "0.10", default-features = false }
 ripemd = { version = "0.1", default-features = false }

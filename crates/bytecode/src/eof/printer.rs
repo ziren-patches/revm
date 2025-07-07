@@ -11,7 +11,7 @@ pub fn print(code: &[u8]) {
         let opcode = &OPCODE_INFO[op as usize];
 
         let Some(opcode) = opcode else {
-            println!("Unknown opcode: 0x{:02X}", op);
+            println!("Unknown opcode: 0x{op:02X}");
             i += 1;
             continue;
         };

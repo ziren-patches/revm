@@ -22,6 +22,8 @@ rust_2018_idioms = "deny"
 all = "warn"
 
 [dependencies]
+alloy-consensus.workspace = true
+
 # revm
 context-interface.workspace = true
 primitives.workspace = true

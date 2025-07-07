@@ -87,18 +87,22 @@ pub fn deduct_caller<CTX: ContextTr>(
 
     let is_call = context.tx().kind().is_call();
     let caller = context.tx().caller();
+    let is_goat_tx = context.tx().is_goat_tx();
 
     // Load caller's account.
     let caller_account = context.journal().load_account(caller)?.data;
-    // Set new caller account balance.
-    caller_account.info.balance = caller_account
-        .info
-        .balance
-        .saturating_sub(U256::from(gas_cost));
 
-    if is_balance_check_disabled {
-        // Make sure the caller's balance is at least the value of the transaction.
-        caller_account.info.balance = value.max(caller_account.info.balance);
+    if !is_goat_tx {
+        // Set new caller account balance.
+        caller_account.info.balance = caller_account
+            .info
+            .balance
+            .saturating_sub(U256::from(gas_cost));
+
+        if is_balance_check_disabled {
+            // Make sure the caller's balance is at least the value of the transaction.
+            caller_account.info.balance = value.max(caller_account.info.balance);
+        }
     }
 
     // Bump the nonce for calls. Nonce for CREATE will be bumped in `handle_create`.

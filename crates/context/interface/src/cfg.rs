@@ -1,6 +1,7 @@
 use auto_impl::auto_impl;
 use core::fmt::Debug;
 use core::hash::Hash;
+use primitives::goat::{GOAT_CHAIN_ID, GOAT_TESTNET_CHAIN_ID};
 use primitives::{hardfork::SpecId, TxKind, U256};
 
 #[auto_impl(&, &mut, Box, Arc)]
@@ -8,6 +9,10 @@ pub trait Cfg {
     type Spec: Into<SpecId> + Clone;
 
     fn chain_id(&self) -> u64;
+
+    fn is_goat_chain(&self) -> bool {
+        self.chain_id() == GOAT_CHAIN_ID || self.chain_id() == GOAT_TESTNET_CHAIN_ID
+    }
 
     // Specification id that is set.
     fn spec(&self) -> Self::Spec;

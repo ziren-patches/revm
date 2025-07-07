@@ -1,4 +1,5 @@
 use crate::TransactionType;
+use alloy_consensus::transaction::{goat_types::Mint, TxGoatInner};
 use context_interface::transaction::{
     AccessList, AccessListItem, SignedAuthorization, Transaction,
 };
@@ -75,6 +76,11 @@ pub struct TxEnv {
     ///
     /// [EIP-7702]: https://eips.ethereum.org/EIPS/eip-7702
     pub authorization_list: Vec<SignedAuthorization>,
+
+    /// Goat system tx fields.
+    pub module: u8,
+    pub action: u8,
+    pub goat: Option<TxGoatInner>,
 }
 
 impl Default for TxEnv {
@@ -94,6 +100,9 @@ impl Default for TxEnv {
             blob_hashes: Vec::new(),
             max_fee_per_blob_gas: 0,
             authorization_list: Vec::new(),
+            module: 0,
+            action: 0,
+            goat: None,
         }
     }
 }
@@ -206,6 +215,20 @@ impl Transaction for TxEnv {
 
     fn max_priority_fee_per_gas(&self) -> Option<u128> {
         self.gas_priority_fee
+    }
+
+    fn deposit(&self) -> Option<Mint> {
+        if let Some(ref goat) = self.goat {
+            return goat.deposit();
+        }
+        None
+    }
+
+    fn withdraw(&self) -> Option<Mint> {
+        if let Some(ref goat) = self.goat {
+            return goat.withdraw();
+        }
+        None
     }
 }
 
