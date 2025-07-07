@@ -69,7 +69,7 @@ dependencies = [
 [[package]]
 name = "alloy-consensus"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-eips",
  "alloy-primitives",
@@ -92,7 +92,7 @@ dependencies = [
 [[package]]
 name = "alloy-consensus-any"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-consensus",
  "alloy-eips",
@@ -142,7 +142,7 @@ dependencies = [
 [[package]]
 name = "alloy-eips"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-eip2124",
  "alloy-eip2930",
@@ -173,7 +173,7 @@ dependencies = [
 [[package]]
 name = "alloy-json-rpc"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-primitives",
  "alloy-sol-types",
@@ -186,7 +186,7 @@ dependencies = [
 [[package]]
 name = "alloy-network"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-consensus",
  "alloy-consensus-any",
@@ -211,7 +211,7 @@ dependencies = [
 [[package]]
 name = "alloy-network-primitives"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-consensus",
  "alloy-eips",
@@ -254,7 +254,7 @@ dependencies = [
 [[package]]
 name = "alloy-provider"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-chains",
  "alloy-consensus",
@@ -314,7 +314,7 @@ dependencies = [
 [[package]]
 name = "alloy-rpc-client"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-json-rpc",
  "alloy-primitives",
@@ -338,7 +338,7 @@ dependencies = [
 [[package]]
 name = "alloy-rpc-types-any"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-consensus-any",
  "alloy-rpc-types-eth",
@@ -348,7 +348,7 @@ dependencies = [
 [[package]]
 name = "alloy-rpc-types-eth"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-consensus",
  "alloy-consensus-any",
@@ -367,7 +367,7 @@ dependencies = [
 [[package]]
 name = "alloy-serde"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-primitives",
  "serde",
@@ -377,7 +377,7 @@ dependencies = [
 [[package]]
 name = "alloy-signer"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-primitives",
  "async-trait",
@@ -391,7 +391,7 @@ dependencies = [
 [[package]]
 name = "alloy-signer-local"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-consensus",
  "alloy-network",
@@ -476,7 +476,7 @@ dependencies = [
 [[package]]
 name = "alloy-transport"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-json-rpc",
  "base64",
@@ -497,7 +497,7 @@ dependencies = [
 [[package]]
 name = "alloy-transport-http"
 version = "0.14.0"
-source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0-goat#013422b3d4387b210ac8350f76c61afcee71b78a"
+source = "git+https://github.com/ziren-patches/alloy?branch=patch-0.14.0#3ae18857e51ef85aae5220b12dfcaad3ce53ff9b"
 dependencies = [
  "alloy-json-rpc",
  "alloy-transport",
@@ -3041,7 +3041,7 @@ dependencies = [
 [[package]]
 name = "p3-dft"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "itertools 0.13.0",
  "p3-field",
@@ -3054,7 +3054,7 @@ dependencies = [
 [[package]]
 name = "p3-field"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "itertools 0.13.0",
  "num-bigint 0.4.6",
@@ -3071,7 +3071,7 @@ dependencies = [
 [[package]]
 name = "p3-koala-bear"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "p3-field",
  "p3-mds",
@@ -3085,7 +3085,7 @@ dependencies = [
 [[package]]
 name = "p3-matrix"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "itertools 0.13.0",
  "p3-field",
@@ -3100,12 +3100,12 @@ dependencies = [
 [[package]]
 name = "p3-maybe-rayon"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 
 [[package]]
 name = "p3-mds"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "itertools 0.13.0",
  "p3-dft",
@@ -3119,7 +3119,7 @@ dependencies = [
 [[package]]
 name = "p3-monty-31"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "itertools 0.13.0",
  "num-bigint 0.4.6",
@@ -3141,7 +3141,7 @@ dependencies = [
 [[package]]
 name = "p3-poseidon2"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "gcd",
  "p3-field",
@@ -3154,7 +3154,7 @@ dependencies = [
 [[package]]
 name = "p3-symmetric"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "itertools 0.13.0",
  "p3-field",
@@ -3164,7 +3164,7 @@ dependencies = [
 [[package]]
 name = "p3-util"
 version = "0.1.0"
-source = "git+https://github.com/zkMIPS/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
+source = "git+https://github.com/ProjectZKM/Plonky3#79f986caf008ee3ae455474f42100cb7227219f3"
 dependencies = [
  "lock_api",
  "serde",
@@ -5514,8 +5514,8 @@ dependencies = [
 
 [[package]]
 name = "zkm-lib"
-version = "1.1.0"
-source = "git+https://github.com/ProjectZKM/Ziren.git#a216e0b22c4a1543a545266583e380ec40b4259b"
+version = "1.1.1"
+source = "git+https://github.com/ProjectZKM/Ziren.git#a8d824b42b4718f36ba087f31090a891adc01bbf"
 dependencies = [
  "bincode",
  "cfg-if",
@@ -5526,8 +5526,8 @@ dependencies = [
 
 [[package]]
 name = "zkm-primitives"
-version = "1.1.0"
-source = "git+https://github.com/ProjectZKM/Ziren.git#a216e0b22c4a1543a545266583e380ec40b4259b"
+version = "1.1.1"
+source = "git+https://github.com/ProjectZKM/Ziren.git#a8d824b42b4718f36ba087f31090a891adc01bbf"
 dependencies = [
  "bincode",
  "hex",

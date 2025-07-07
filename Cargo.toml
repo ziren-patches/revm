@@ -62,12 +62,12 @@ alloy-primitives = { version = "1.0.0", default-features = false }
 alloy-rlp = { version = "0.3", default-features = false }
 alloy-sol-types = { version = "1.0.0", default-features = false }
 
-alloy-consensus = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
-alloy-eips = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
-alloy-provider = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
-alloy-signer = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
-alloy-signer-local = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
-alloy-transport = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0-goat", default-features = false }
+alloy-consensus = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0", default-features = false }
+alloy-eips = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0", default-features = false }
+alloy-provider = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0", default-features = false }
+alloy-signer = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0", default-features = false }
+alloy-signer-local = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0", default-features = false }
+alloy-transport = { git = "https://github.com/ziren-patches/alloy", branch = "patch-0.14.0", default-features = false }
 
 # alloy-consensus = { path = "../alloy/crates/consensus", default-features = false }
 # alloy-eips = { path = "../alloy/crates/eips", default-features = false }
