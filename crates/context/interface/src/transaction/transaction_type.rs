@@ -17,6 +17,8 @@ pub enum TransactionType {
     Eip7702 = 4,
     /// Custom type means that the transaction trait was extended and has custom types
     Custom = 0xFF,
+    /// Goat transaction type
+    Goat = 0x60,
 }
 
 impl TransactionType {
@@ -57,6 +59,7 @@ impl From<u8> for TransactionType {
             2 => Self::Eip1559,
             3 => Self::Eip4844,
             4 => Self::Eip7702,
+            0x60 => Self::Goat,
             _ => Self::Custom,
         }
     }

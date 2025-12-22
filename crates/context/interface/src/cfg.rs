@@ -2,6 +2,7 @@
 use auto_impl::auto_impl;
 use core::fmt::Debug;
 use core::hash::Hash;
+use primitives::goat::{GOAT_CHAIN_ID, GOAT_TESTNET_CHAIN_ID};
 use primitives::{hardfork::SpecId, Address, TxKind, U256};
 
 /// Configuration for the EVM.
@@ -13,6 +14,10 @@ pub trait Cfg {
 
     /// Returns the chain ID of the EVM that is compared with the transaction's chain ID.
     fn chain_id(&self) -> u64;
+
+    fn is_goat_chain(&self) -> bool {
+        self.chain_id() == GOAT_CHAIN_ID || self.chain_id() == GOAT_TESTNET_CHAIN_ID
+    }
 
     /// Returns whether the transaction's chain ID check is enabled.
     fn tx_chain_id_check(&self) -> bool;

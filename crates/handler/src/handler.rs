@@ -221,15 +221,21 @@ pub trait Handler {
         init_and_floor_gas: InitialAndFloorGas,
         eip7702_gas_refund: i64,
     ) -> Result<(), Self::Error> {
-        // Calculate final refund and add EIP-7702 refund to gas.
-        self.refund(evm, exec_result, eip7702_gas_refund);
-        // Ensure gas floor is met and minimum floor gas is spent.
-        // if `cfg.is_eip7623_disabled` is true, floor gas will be set to zero
-        self.eip7623_check_gas_floor(evm, exec_result, init_and_floor_gas);
-        // Return unused gas to caller
-        self.reimburse_caller(evm, exec_result)?;
-        // Pay transaction fees to beneficiary
-        self.reward_beneficiary(evm, exec_result)?;
+        if evm.ctx().tx().is_goat_tx() {
+            self.exec_goat(evm)?;
+        } else {
+            // Calculate final refund and add EIP-7702 refund to gas.
+            self.refund(evm, exec_result, eip7702_gas_refund);
+            // Ensure gas floor is met and minimum floor gas is spent.
+            // if `cfg.is_eip7623_disabled` is true, floor gas will be set to zero
+            self.eip7623_check_gas_floor(evm, exec_result, init_and_floor_gas);
+            // Return unused gas to caller
+            self.reimburse_caller(evm, exec_result)?;
+            if !evm.ctx().cfg().is_goat_chain() {
+                // Pay transaction fees to beneficiary
+                self.reward_beneficiary(evm, exec_result)?;
+            }
+        }
         Ok(())
     }
 
@@ -410,6 +416,10 @@ pub trait Handler {
         init_and_floor_gas: InitialAndFloorGas,
     ) {
         post_execution::eip7623_check_gas_floor(exec_result.gas_mut(), init_and_floor_gas)
+    }
+
+    fn exec_goat(&self, evm: &mut Self::Evm) -> Result<(), Self::Error> {
+        post_execution::exec_goat(evm.ctx()).map_err(From::from)
     }
 
     /// Calculates the final gas refund amount, including any EIP-7702 refunds.

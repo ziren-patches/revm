@@ -145,15 +145,19 @@ pub fn calculate_caller_fee(
 
     let gas_balance_spending = effective_balance_spending - tx.value();
 
-    // new balance
-    let mut new_balance = balance.saturating_sub(gas_balance_spending);
+    if context.tx().is_goat_tx() {
+        return Ok(balance);
+    } else {
+        // new balance
+        let mut new_balance = balance.saturating_sub(gas_balance_spending);
 
-    if is_balance_check_disabled {
-        // Make sure the caller's balance is at least the value of the transaction.
-        new_balance = new_balance.max(tx.value());
+        if is_balance_check_disabled {
+            // Make sure the caller's balance is at least the value of the transaction.
+            new_balance = new_balance.max(tx.value());
+        }
+
+        return Ok(new_balance);
     }
-
-    Ok(new_balance)
 }
 
 /// Validates caller state and deducts transaction costs from the caller's balance.

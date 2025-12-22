@@ -202,6 +202,7 @@ pub fn validate_tx_env<CTX: ContextTr>(
                 return Err(InvalidTransaction::EmptyAuthorizationList);
             }
         }
+        TransactionType::Goat => {}
         TransactionType::Custom => {
             // Custom transaction type check is not done here.
         }
@@ -246,7 +247,7 @@ pub fn validate_initial_tx_gas(
 
     // EIP-7623: Increase calldata cost
     // floor gas should be less than gas limit.
-    if spec.is_enabled_in(SpecId::PRAGUE) && gas.floor_gas > tx.gas_limit() {
+    if !tx.is_goat_tx() && spec.is_enabled_in(SpecId::PRAGUE) && gas.floor_gas > tx.gas_limit() {
         return Err(InvalidTransaction::GasFloorMoreThanGasLimit {
             gas_floor: gas.floor_gas,
             gas_limit: tx.gas_limit(),

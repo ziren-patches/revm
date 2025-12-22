@@ -9,6 +9,7 @@
 //! - Cross-platform synchronization primitives
 //! - Type aliases for common EVM concepts (storage keys/values)
 //! - Re-exports of alloy primitive types for convenience
+#![allow(missing_docs)]
 #![cfg_attr(not(test), warn(unused_crate_dependencies))]
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -23,6 +24,7 @@ pub mod eip7702;
 pub mod eip7823;
 pub mod eip7825;
 pub mod eip7907;
+pub mod goat;
 pub mod hardfork;
 mod once_lock;
 

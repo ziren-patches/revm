@@ -18,6 +18,8 @@ rustdoc-args = ["--cfg", "docsrs"]
 workspace = true
 
 [dependencies]
+alloy-consensus.workspace = true
+
 # revm
 primitives.workspace = true
 database-interface.workspace = true

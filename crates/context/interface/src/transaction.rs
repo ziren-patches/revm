@@ -5,6 +5,7 @@ pub mod eip7702;
 mod either;
 pub mod transaction_type;
 
+use alloy_consensus::transaction::goat_types::Mint;
 pub use alloy_types::{
     AccessList, AccessListItem, Authorization, RecoveredAuthority, RecoveredAuthorization,
     SignedAuthorization,
@@ -45,6 +46,18 @@ pub trait Transaction {
     ///
     /// Depending on this field other functions should be called.
     fn tx_type(&self) -> u8;
+
+    fn is_goat_tx(&self) -> bool {
+        self.tx_type() == TransactionType::Goat as u8
+    }
+
+    fn deposit(&self) -> Option<Mint> {
+        None
+    }
+
+    fn withdraw(&self) -> Option<Mint> {
+        None
+    }
 
     /// Caller aka Author aka transaction signer.
     ///
@@ -146,6 +159,10 @@ pub trait Transaction {
     ///
     /// While for transactions after Eip1559 it is minimum of max_fee and `base + max_priority_fee`.
     fn effective_gas_price(&self, base_fee: u128) -> u128 {
+        if self.is_goat_tx() {
+            return 0;
+        }
+
         if self.tx_type() == TransactionType::Legacy as u8
             || self.tx_type() == TransactionType::Eip2930 as u8
         {
@@ -158,6 +175,32 @@ pub trait Transaction {
             return max_price;
         };
         min(max_price, base_fee.saturating_add(max_priority_fee))
+    }
+
+    /// Returns the effective tip for this transaction.
+    ///
+    /// For dynamic fee transactions: `min(max_fee_per_gas - base_fee, max_priority_fee_per_gas)`.
+    /// For legacy fee transactions: `gas_price - base_fee`.
+    fn effective_tip_per_gas(&self, base_fee: u64) -> Option<u128> {
+        if self.is_goat_tx() {
+            return Some(0);
+        }
+
+        let base_fee = base_fee as u128;
+
+        let max_fee_per_gas = self.max_fee_per_gas();
+
+        // Check if max_fee_per_gas is less than base_fee
+        if max_fee_per_gas < base_fee {
+            return None;
+        }
+
+        // Calculate the difference between max_fee_per_gas and base_fee
+        let fee = max_fee_per_gas - base_fee;
+
+        // Compare the fee with max_priority_fee_per_gas (or gas price for legacy fee transactions)
+        self.max_priority_fee_per_gas()
+            .map_or(Some(fee), |priority_fee| Some(fee.min(priority_fee)))
     }
 
     /// Returns the maximum balance that can be spent by the transaction.

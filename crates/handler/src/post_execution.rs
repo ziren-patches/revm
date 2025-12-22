@@ -5,6 +5,7 @@ use context_interface::{
     Block, Cfg, ContextTr, Database, LocalContextTr, Transaction,
 };
 use interpreter::{Gas, InitialAndFloorGas, SuccessOrHalt};
+use primitives::goat::{GOAT_FOUNDDATION_CONTRACT, GOAT_LOCKING_CONTRACT};
 use primitives::{hardfork::SpecId, U256};
 
 /// Ensures minimum gas floor is spent according to EIP-7623.
@@ -16,6 +17,46 @@ pub fn eip7623_check_gas_floor(gas: &mut Gas, init_and_floor_gas: InitialAndFloo
         // clear refund
         gas.set_refund(0);
     }
+}
+
+pub fn exec_goat<CTX: ContextTr>(context: &mut CTX) -> Result<(), <CTX::Db as Database>::Error> {
+    // Deposit of the bridge.
+    if let Some(deposit) = context.tx().deposit() {
+        // Add the deposit value to the target.
+        let deposit_account = context.journal().load_account(deposit.address)?;
+        deposit_account.data.mark_touch();
+        deposit_account.data.info.balance = deposit_account
+            .data
+            .info
+            .balance
+            .saturating_add(deposit.amount);
+
+        // Add the tax to GF.
+        if deposit.tax > U256::ZERO {
+            let foundation_account = context.journal().load_account(GOAT_FOUNDDATION_CONTRACT)?;
+            foundation_account.data.mark_touch();
+            foundation_account.data.info.balance = foundation_account
+                .data
+                .info
+                .balance
+                .saturating_add(deposit.tax);
+        }
+    }
+
+    // Withdrawal from consensus layer.
+    // Withdrawal from L1 which means deposit to L2.
+    if let Some(withdraw) = context.tx().withdraw() {
+        // The amount in locking contract is from two:
+        // 1. validator locked the amount in the locking contract
+        // 2. gas fee addding in the runtime
+        if withdraw.amount > U256::ZERO {
+            context
+                .journal()
+                .transfer(GOAT_LOCKING_CONTRACT, withdraw.address, withdraw.amount)?;
+        }
+    }
+
+    Ok(())
 }
 
 /// Calculates and applies gas refunds based on the specification.
@@ -89,7 +130,11 @@ pub fn output<CTX: ContextTr<Journal: JournalTr>, HALTREASON: HaltReasonTr>(
 ) -> ExecutionResult<HALTREASON> {
     // Used gas with refund calculated.
     let gas_refunded = result.gas().refunded() as u64;
-    let gas_used = result.gas().used();
+    let gas_used = if context.tx().is_goat_tx() {
+        0
+    } else {
+        result.gas().used();
+    };
     let output = result.output();
     let instruction_result = result.into_interpreter_result();
 
