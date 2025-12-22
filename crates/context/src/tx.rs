@@ -265,6 +265,11 @@ pub struct TxEnvBuilder {
     blob_hashes: Vec<B256>,
     max_fee_per_blob_gas: u128,
     authorization_list: Vec<Either<SignedAuthorization, RecoveredAuthorization>>,
+
+    /// Goat system tx fields.
+    pub module: u8,
+    pub action: u8,
+    pub goat: Option<TxGoatInner>,
 }
 
 impl TxEnvBuilder {
@@ -285,6 +290,9 @@ impl TxEnvBuilder {
             blob_hashes: Vec::new(),
             max_fee_per_blob_gas: 0,
             authorization_list: Vec::new(),
+            module: 0,
+            action: 0,
+            goat: None,
         }
     }
 
@@ -472,6 +480,8 @@ impl TxEnvBuilder {
                         self.kind = TxKind::Call(Address::default());
                     }
                 }
+                TransactionType::Goat => {
+                }
                 TransactionType::Custom => {
                     // do nothing
                 }
@@ -493,6 +503,9 @@ impl TxEnvBuilder {
             blob_hashes: self.blob_hashes,
             max_fee_per_blob_gas: self.max_fee_per_blob_gas,
             authorization_list: self.authorization_list,
+            module: self.module,
+            action: self.action,
+            goat: self.goat,
         };
 
         // if tx_type is not set, derive it from fields and fix errors.
@@ -563,6 +576,8 @@ impl TxEnvBuilder {
                     if !self.kind.is_call() {
                         return Err(DeriveTxTypeError::MissingTargetForEip7702.into());
                     }
+                }
+                TransactionType::Goat => {
                 }
                 TransactionType::Custom => {
                     // do nothing, custom transaction type is handled by the caller.
@@ -649,6 +664,9 @@ impl TxEnv {
             blob_hashes,
             max_fee_per_blob_gas,
             authorization_list,
+            module: _,
+            action: _,
+            goat: _,
         } = self;
 
         TxEnvBuilder::new()
