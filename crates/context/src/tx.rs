@@ -1,6 +1,9 @@
 //! This module contains [`TxEnv`] struct and implements [`Transaction`] trait for it.
 use crate::TransactionType;
-use alloy_consensus::transaction::{goat_types::Mint, TxGoatInner};
+use alloy_consensus::transaction::{
+    goat_types::{Action, Mint, Module},
+    TxGoatInner,
+};
 use context_interface::{
     either::Either,
     transaction::{
@@ -89,8 +92,8 @@ pub struct TxEnv {
     pub authorization_list: Vec<Either<SignedAuthorization, RecoveredAuthorization>>,
 
     /// Goat system tx fields.
-    pub module: u8,
-    pub action: u8,
+    pub module: Module,
+    pub action: Action,
     pub goat: Option<TxGoatInner>,
 }
 
@@ -267,8 +270,8 @@ pub struct TxEnvBuilder {
     authorization_list: Vec<Either<SignedAuthorization, RecoveredAuthorization>>,
 
     /// Goat system tx fields.
-    pub module: u8,
-    pub action: u8,
+    pub module: Module,
+    pub action: Action,
     pub goat: Option<TxGoatInner>,
 }
 

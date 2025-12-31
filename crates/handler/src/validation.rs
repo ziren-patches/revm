@@ -120,7 +120,28 @@ pub fn validate_tx_env<CTX: ContextTr>(
 
     // Check chain_id if config is enabled.
     // EIP-155: Simple replay attack protection
-    if context.cfg().tx_chain_id_check() {
+    // The Goat system transaction does not have a `chain_id` field.
+    // eg.
+    // {
+    // 	"blockHash": "0x3eab36b7288cccd6cb988c78106b4bac08e97a5d1944b35ceff9a3a99fedb0a7",
+    // 	"blockNumber": "0x97cbe9",
+    // 	"from": "0xbc10000000000000000000000000000000001000",
+    // 	"gas": "0x0",
+    // 	"gasPrice": "0x0",
+    // 	"hash": "0xf0dd179be9dc2baec239029d08be1a40e7adca079bb200d4a8816236fc572677",
+    // 	"input": "0x94f490bdd5c5e8b99bd6e075fe820ef77a955cd1af738c9f6830e3d72600000000000000",
+    // 	"nonce": "0x150604",
+    // 	"to": "0xbc10000000000000000000000000000000000005",
+    // 	"transactionIndex": "0x0",
+    // 	"value": "0x0",
+    // 	"type": "0x60",
+    // 	"v": "0x0",
+    // 	"r": "0x0",
+    // 	"s": "0x0",
+    // 	"module": 1,
+    // 	"action": 4
+    // }
+    if context.cfg().tx_chain_id_check() && !context.cfg().is_goat_chain() {
         if let Some(chain_id) = tx.chain_id() {
             if chain_id != context.cfg().chain_id() {
                 return Err(InvalidTransaction::InvalidChainId);
