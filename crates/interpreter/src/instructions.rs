@@ -33,14 +33,17 @@ use crate::{interpreter_types::InterpreterTypes, Host, InstructionContext};
 #[derive(Debug)]
 pub struct Instruction<W: InterpreterTypes, H: ?Sized> {
     fn_: fn(InstructionContext<'_, H, W>),
-    static_gas: u64,
+    /// Static gas costs are at most a few thousand; one word keeps the table
+    /// entry at two words, which the per-opcode lookup pays for.
+    static_gas: u32,
 }
 
 impl<W: InterpreterTypes, H: Host + ?Sized> Instruction<W, H> {
     /// Creates a new instruction with the given function and static gas cost.
     #[inline]
     pub const fn new(fn_: fn(InstructionContext<'_, H, W>), static_gas: u64) -> Self {
-        Self { fn_, static_gas }
+        assert!(static_gas <= u32::MAX as u64, "static gas fits a word");
+        Self { fn_, static_gas: static_gas as u32 }
     }
 
     /// Creates an unknown/invalid instruction.
@@ -61,7 +64,7 @@ impl<W: InterpreterTypes, H: Host + ?Sized> Instruction<W, H> {
     /// Returns the static gas cost of this instruction.
     #[inline(always)]
     pub const fn static_gas(&self) -> u64 {
-        self.static_gas
+        self.static_gas as u64
     }
 }
 

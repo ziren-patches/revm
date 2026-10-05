@@ -117,6 +117,18 @@ pub trait MemoryTr {
     /// Panics if range is out of scope of allocated memory.
     fn set(&mut self, memory_offset: usize, data: &[u8]);
 
+    /// Stores `value` big-endian at `memory_offset`; the memory must already
+    /// hold 32 bytes there.
+    fn set_u256(&mut self, memory_offset: usize, value: U256) {
+        self.set(memory_offset, &value.to_be_bytes::<32>());
+    }
+
+    /// The 32 big-endian bytes at `memory_offset` as a word; the memory must
+    /// already hold 32 bytes there.
+    fn get_u256(&self, memory_offset: usize) -> U256 {
+        U256::try_from_be_slice(self.slice_len(memory_offset, 32).as_ref()).unwrap()
+    }
+
     /// Returns memory size.
     fn size(&self) -> usize;
 

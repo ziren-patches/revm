@@ -292,7 +292,15 @@ impl Stack {
             // eliminating an intermediate copy,
             // which is a condition we know to be true in this context.
             let top = self.data.as_mut_ptr().add(len - 1);
-            core::ptr::swap_nonoverlapping(top.sub(n), top.sub(n_m_index), 1);
+            // Swapped limb by limb: `swap_nonoverlapping` of a 32-byte value
+            // lowers to byte-aligned moves, which cost two loads per word on
+            // a 32-bit target where the stack words are naturally aligned.
+            let a = &mut *top.sub(n).cast::<[u64; 4]>();
+            let b = &mut *top.sub(n_m_index).cast::<[u64; 4]>();
+            core::mem::swap(&mut a[0], &mut b[0]);
+            core::mem::swap(&mut a[1], &mut b[1]);
+            core::mem::swap(&mut a[2], &mut b[2]);
+            core::mem::swap(&mut a[3], &mut b[3]);
         }
         true
     }

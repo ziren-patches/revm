@@ -75,6 +75,14 @@ impl MemoryTr for SharedMemory {
         self.set(memory_offset, data);
     }
 
+    fn set_u256(&mut self, memory_offset: usize, value: U256) {
+        Self::set_u256(self, memory_offset, value);
+    }
+
+    fn get_u256(&self, memory_offset: usize) -> U256 {
+        Self::get_u256(self, memory_offset)
+    }
+
     fn size(&self) -> usize {
         self.len()
     }
@@ -383,6 +391,19 @@ impl SharedMemory {
     /// Panics on out of bounds.
     #[inline]
     pub fn get_u256(&self, offset: usize) -> U256 {
+        #[cfg(target_pointer_width = "32")]
+        {
+            // Four unaligned word reads and byte swaps: the byte-wise decode
+            // costs a load per byte on this target.
+            let src = self.slice_len(offset, 32);
+            let p = src.as_ptr().cast::<u64>();
+            let mut limbs = [0u64; 4];
+            for (i, limb) in limbs.iter_mut().enumerate() {
+                *limb = u64::from_be(unsafe { p.add(3 - i).read_unaligned() });
+            }
+            return U256::from_limbs(limbs);
+        }
+        #[allow(unreachable_code)]
         self.get_word(offset).into()
     }
 
@@ -416,6 +437,17 @@ impl SharedMemory {
     #[inline]
     #[cfg_attr(debug_assertions, track_caller)]
     pub fn set_u256(&mut self, offset: usize, value: U256) {
+        #[cfg(target_pointer_width = "32")]
+        {
+            let mut dst = self.slice_mut(offset, 32);
+            let p = dst.as_mut_ptr().cast::<u64>();
+            let limbs = value.as_limbs();
+            for (i, limb) in limbs.iter().enumerate() {
+                unsafe { p.add(3 - i).write_unaligned(limb.to_be()) };
+            }
+            return;
+        }
+        #[allow(unreachable_code)]
         self.set(offset, &value.to_be_bytes::<32>());
     }
 

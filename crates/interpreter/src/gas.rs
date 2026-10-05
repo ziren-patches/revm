@@ -146,6 +146,18 @@ impl Gas {
     #[inline]
     #[must_use = "prefer using `gas!` instead to return an out-of-gas error on failure"]
     pub fn record_cost(&mut self, cost: u64) -> bool {
+        #[cfg(target_pointer_width = "32")]
+        {
+            let remaining = self.remaining;
+            if remaining >> 32 == 0 && cost >> 32 == 0 {
+                let (lo, cost) = (remaining as u32, cost as u32);
+                if lo < cost {
+                    return false;
+                }
+                self.remaining = (lo - cost) as u64;
+                return true;
+            }
+        }
         if let Some(new_remaining) = self.remaining.checked_sub(cost) {
             self.remaining = new_remaining;
             return true;
@@ -159,6 +171,19 @@ impl Gas {
     #[inline(always)]
     #[must_use = "In case of not enough gas, the interpreter should halt with an out-of-gas error"]
     pub fn record_cost_unsafe(&mut self, cost: u64) -> bool {
+        #[cfg(target_pointer_width = "32")]
+        {
+            // On a 32-bit target a 64-bit compare and subtract is a dozen
+            // instructions; gas fits in one word on every live chain, so the
+            // low word is enough whenever the high word is zero.
+            let remaining = self.remaining;
+            if remaining >> 32 == 0 {
+                let lo = remaining as u32;
+                let oog = cost >> 32 != 0 || lo < cost as u32;
+                self.remaining = lo.wrapping_sub(cost as u32) as u64;
+                return oog;
+            }
+        }
         let oog = self.remaining < cost;
         self.remaining = self.remaining.wrapping_sub(cost);
         oog
