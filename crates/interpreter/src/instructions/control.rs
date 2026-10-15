@@ -1,4 +1,5 @@
 use crate::{
+    gas,
     interpreter::Interpreter,
     interpreter_types::{InterpreterTypes, Jumps, LoopControl, MemoryTr, RuntimeFlag, StackTr},
     InstructionResult, InterpreterAction,
@@ -38,8 +39,16 @@ fn jump_inner<WIRE: InterpreterTypes>(interpreter: &mut Interpreter<WIRE>, targe
         interpreter.halt(InstructionResult::InvalidJump);
         return;
     }
-    // SAFETY: `is_valid_jump` ensures that `dest` is in bounds.
-    interpreter.bytecode.absolute_jump(target);
+    // The destination is a JUMPDEST, which only costs its gas: charge it
+    // here and land past it, which saves its dispatch (one taken jump in
+    // every sixteen opcodes of a mainnet block).
+    if interpreter.gas.record_cost_unsafe(gas::JUMPDEST) {
+        interpreter.halt_oog();
+        return;
+    }
+    // SAFETY: `is_valid_jump` ensures that `dest` is in bounds, and the
+    // bytecode is padded with a STOP past its last byte.
+    interpreter.bytecode.absolute_jump(target + 1);
 }
 
 /// Implements the JUMPDEST instruction.

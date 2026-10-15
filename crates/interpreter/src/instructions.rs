@@ -66,6 +66,12 @@ impl<W: InterpreterTypes, H: Host + ?Sized> Instruction<W, H> {
     pub const fn static_gas(&self) -> u64 {
         self.static_gas as u64
     }
+
+    /// Returns the static gas cost as stored, one word.
+    #[inline]
+    pub const fn static_gas_word(&self) -> u32 {
+        self.static_gas
+    }
 }
 
 impl<W: InterpreterTypes, H: Host + ?Sized> Copy for Instruction<W, H> {}
