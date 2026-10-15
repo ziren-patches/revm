@@ -10,15 +10,24 @@ use primitives::U256;
 pub fn lt<WIRE: InterpreterTypes, H: ?Sized>(context: InstructionContext<'_, H, WIRE>) {
     //gas!(context.interpreter, gas::VERYLOW);
     popn_top!([op1], op2, context.interpreter);
-    *op2 = U256::from(op1 < *op2);
+    let result = op1 < *op2;
+    if super::control::cond_jump(context.interpreter, result) {
+        return;
+    }
+    popn_top!([], op2, context.interpreter);
+    *op2 = U256::from(result);
 }
 
 /// Implements the GT instruction - greater than comparison.
 pub fn gt<WIRE: InterpreterTypes, H: ?Sized>(context: InstructionContext<'_, H, WIRE>) {
     //gas!(context.interpreter, gas::VERYLOW);
     popn_top!([op1], op2, context.interpreter);
-
-    *op2 = U256::from(op1 > *op2);
+    let result = op1 > *op2;
+    if super::control::cond_jump(context.interpreter, result) {
+        return;
+    }
+    popn_top!([], op2, context.interpreter);
+    *op2 = U256::from(result);
 }
 
 /// Implements the CLZ instruction - count leading zeros.
@@ -57,8 +66,12 @@ pub fn sgt<WIRE: InterpreterTypes, H: ?Sized>(context: InstructionContext<'_, H,
 pub fn eq<WIRE: InterpreterTypes, H: ?Sized>(context: InstructionContext<'_, H, WIRE>) {
     //gas!(context.interpreter, gas::VERYLOW);
     popn_top!([op1], op2, context.interpreter);
-
-    *op2 = U256::from(op1 == *op2);
+    let result = op1 == *op2;
+    if super::control::cond_jump(context.interpreter, result) {
+        return;
+    }
+    popn_top!([], op2, context.interpreter);
+    *op2 = U256::from(result);
 }
 
 /// Implements the ISZERO instruction.
@@ -67,7 +80,12 @@ pub fn eq<WIRE: InterpreterTypes, H: ?Sized>(context: InstructionContext<'_, H, 
 pub fn iszero<WIRE: InterpreterTypes, H: ?Sized>(context: InstructionContext<'_, H, WIRE>) {
     //gas!(context.interpreter, gas::VERYLOW);
     popn_top!([], op1, context.interpreter);
-    *op1 = U256::from(op1.is_zero());
+    let result = op1.is_zero();
+    if super::control::cond_jump(context.interpreter, result) {
+        return;
+    }
+    popn_top!([], op1, context.interpreter);
+    *op1 = U256::from(result);
 }
 
 /// Implements the AND instruction.

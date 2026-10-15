@@ -304,6 +304,29 @@ impl<IW: InterpreterTypes> Interpreter<IW> {
         instruction.execute(context);
     }
 
+    /// [`Self::step`] for a frame whose remaining gas fits in a word: the
+    /// static gas is charged on the low word only (see
+    /// [`Gas::record_cost_low_word`]).
+    #[cfg(all(target_pointer_width = "32", target_endian = "little"))]
+    #[inline(always)]
+    fn step_low_word_gas<H: Host + ?Sized>(
+        &mut self,
+        instruction_table: &InstructionTable<IW, H>,
+        host: &mut H,
+    ) {
+        let opcode = self.bytecode.opcode();
+        self.bytecode.relative_jump(1);
+        let instruction = unsafe { instruction_table.get_unchecked(opcode as usize) };
+        if self.gas.record_cost_low_word(instruction.static_gas_word()) {
+            return self.halt_oog();
+        }
+        let context = InstructionContext {
+            interpreter: self,
+            host,
+        };
+        instruction.execute(context);
+    }
+
     /// Executes the instruction at the current instruction pointer.
     ///
     /// Internally it will increment instruction pointer by one.
@@ -321,6 +344,13 @@ impl<IW: InterpreterTypes> Interpreter<IW> {
         instruction_table: &InstructionTable<IW, H>,
         host: &mut H,
     ) -> InterpreterAction {
+        #[cfg(all(target_pointer_width = "32", target_endian = "little"))]
+        if self.gas.remaining() >> 32 == 0 {
+            while self.bytecode.is_not_end() {
+                self.step_low_word_gas(instruction_table, host);
+            }
+            return self.take_next_action();
+        }
         while self.bytecode.is_not_end() {
             self.step(instruction_table, host);
         }

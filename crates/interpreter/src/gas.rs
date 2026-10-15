@@ -165,6 +165,27 @@ impl Gas {
         false
     }
 
+    /// Charges an opcode's static gas in the step loop of a frame whose
+    /// remaining gas fits in a word; returns `true` when it is exceeded.
+    ///
+    /// A frame's remaining gas only falls while it runs (gas a call returns
+    /// is credited between runs of the loop, and never brings it above what
+    /// it was before the call), so a word that fits when the loop starts
+    /// keeps fitting, and the low word of the little-endian `u64` is all the
+    /// loop has to read and write.  On out of gas the frame halts and spends
+    /// all its gas, so the wrapped low word is never read.
+    #[cfg(all(target_pointer_width = "32", target_endian = "little"))]
+    #[inline(always)]
+    #[must_use = "In case of not enough gas, the interpreter should halt with an out-of-gas error"]
+    pub fn record_cost_low_word(&mut self, cost: u32) -> bool {
+        debug_assert!(self.remaining >> 32 == 0);
+        // SAFETY: the first word of a little-endian `u64` is its low word.
+        let lo = unsafe { &mut *(&raw mut self.remaining).cast::<u32>() };
+        let oog = *lo < cost;
+        *lo = lo.wrapping_sub(cost);
+        oog
+    }
+
     /// Records an explicit cost. In case of underflow the gas will wrap around cost.
     ///
     /// Returns `true` if the gas limit is exceeded.
