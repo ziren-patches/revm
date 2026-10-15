@@ -32,6 +32,9 @@ pub fn push<const N: usize, WIRE: InterpreterTypes, H: ?Sized>(
 ) {
     //gas!(context.interpreter, gas::VERYLOW);
 
+    if N == 2 && super::control::push2_jump(context.interpreter) {
+        return;
+    }
     let slice = context.interpreter.bytecode.read_slice(N);
     if !context.interpreter.stack.push_slice(slice) {
         context.interpreter.halt(InstructionResult::StackOverflow);
