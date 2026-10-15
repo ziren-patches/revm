@@ -78,6 +78,33 @@ pub(crate) fn push2_jump<WIRE: InterpreterTypes>(interpreter: &mut Interpreter<W
     true
 }
 
+/// A comparison (ISZERO, EQ, LT or GT) followed by PUSH2 and JUMPI, how solc
+/// emits a conditional branch: called by the comparison with its `result`,
+/// its operands popped but the result slot still on the stack.  When the
+/// next opcodes are PUSH2 and JUMPI, drops the result slot, charges the two
+/// instructions' gas (3 then 10) as their dispatches would, branches on
+/// `result` and returns `true`.  Returns `false`, having done nothing, for
+/// any other next opcode or when the push would overflow a full stack.
+#[inline(always)]
+pub(crate) fn cond_jump<WIRE: InterpreterTypes>(interpreter: &mut Interpreter<WIRE>, result: bool) -> bool {
+    let bytes = interpreter.bytecode.read_slice(4);
+    if bytes[0] != opcode::PUSH2 || bytes[3] != opcode::JUMPI || interpreter.stack.len() >= STACK_LIMIT {
+        return false;
+    }
+    let target = ((bytes[1] as usize) << 8) | bytes[2] as usize;
+    if interpreter.gas.record_cost_unsafe(gas::VERYLOW) || interpreter.gas.record_cost_unsafe(gas::HIGH) {
+        interpreter.halt_oog();
+        return true;
+    }
+    popn!([_result], interpreter, true);
+    if result {
+        jump_to(interpreter, target);
+    } else {
+        interpreter.bytecode.relative_jump(4);
+    }
+    true
+}
+
 /// Internal helper function for jump operations.
 ///
 /// Validates jump target and performs the actual jump.
@@ -281,6 +308,39 @@ mod tests {
         assert_eq!(run(&code, 100), (InstructionResult::Stop, 3 + 8 + 1, vec![]));
         let code = [0x60, 0x01, 0x60, 0x07, 0x57, 0xfe, 0xfe, 0x5b, 0x00];
         assert_eq!(run(&code, 100), (InstructionResult::Stop, 3 + 3 + 10 + 1, vec![]));
+    }
+
+    #[test]
+    fn compare_push2_jumpi() {
+        // PUSH1 0, ISZERO, PUSH2 9, JUMPI, INVALID, INVALID, JUMPDEST, PUSH1 7, STOP
+        let code = [0x60, 0x00, 0x15, 0x61, 0x00, 0x09, 0x57, 0xfe, 0xfe, 0x5b, 0x60, 0x07, 0x00];
+        assert_eq!(run(&code, 100), (InstructionResult::Stop, 3 + 3 + 3 + 10 + 1 + 3, vec![U(7)]));
+        // out of gas on the PUSH2 or the JUMPI or the JUMPDEST
+        for limit in [6, 8, 9, 18, 19] {
+            assert_eq!(run(&code, limit).0, InstructionResult::OutOfGas, "gas limit {limit}");
+        }
+        // not taken: ISZERO of 1 runs on past the JUMPI
+        let code = [0x60, 0x01, 0x15, 0x61, 0x00, 0x09, 0x57, 0x60, 0x05, 0x00];
+        assert_eq!(run(&code, 100), (InstructionResult::Stop, 3 + 3 + 3 + 10 + 3, vec![U(5)]));
+        // EQ, LT and GT, taken and not, with the operands left below
+        for (op, a, b, taken) in [(0x14, 4, 4, true), (0x14, 4, 5, false), (0x10, 4, 5, true),
+                                  (0x10, 5, 4, false), (0x11, 5, 4, true), (0x11, 4, 5, false)] {
+            // PUSH1 9, PUSH1 b, PUSH1 a, op, PUSH2 13, JUMPI, PUSH1 1, STOP, JUMPDEST, PUSH1 2, STOP
+            let code = [0x60, 0x09, 0x60, b, 0x60, a, op, 0x61, 0x00, 0x0e, 0x57, 0x60, 0x01, 0x00,
+                        0x5b, 0x60, 0x02, 0x00];
+            let (result, _, stack) = run(&code, 100);
+            assert_eq!(result, InstructionResult::Stop);
+            assert_eq!(stack, vec![U(9), U(if taken { 2 } else { 1 })], "op {op:#x} {a} {b}");
+        }
+        // a taken branch to a non-JUMPDEST halts
+        let code = [0x60, 0x00, 0x15, 0x61, 0x00, 0x08, 0x57, 0x00, 0xfe];
+        assert_eq!(run(&code, 100).0, InstructionResult::InvalidJump);
+        // ISZERO on an empty stack still underflows
+        assert_eq!(run(&[0x15, 0x61, 0x00, 0x05, 0x57, 0x5b], 100).0, InstructionResult::StackUnderflow);
+        // a full stack leaves the PUSH2 to overflow
+        let mut code = vec![0x5f; 1024];
+        code.extend([0x15, 0x61, 0x04, 0x07, 0x57, 0x5b, 0x00]);
+        assert_eq!(run(&code, 1_000_000).0, InstructionResult::StackOverflow);
     }
 
     #[test]

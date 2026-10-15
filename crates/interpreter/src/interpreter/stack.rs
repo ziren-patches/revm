@@ -215,10 +215,18 @@ impl Stack {
     pub fn push(&mut self, value: U256) -> bool {
         // In debug builds, verify we have sufficient capacity provisioned.
         debug_assert!(self.data.capacity() >= STACK_LIMIT);
-        if self.data.len() == STACK_LIMIT {
+        let len = self.data.len();
+        if len == STACK_LIMIT {
             return false;
         }
-        self.data.push(value);
+        // SAFETY: the capacity is at least `STACK_LIMIT` (see `Stack::new`) and
+        // `len < STACK_LIMIT`.  Writing in place, as `push_slice` does, keeps
+        // `Vec::push`'s growth path, and the register spills it costs every
+        // pushing instruction, out of the interpreter.
+        unsafe {
+            self.data.as_mut_ptr().add(len).write(value);
+            self.data.set_len(len + 1);
+        }
         true
     }
 
